@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./Predict.css";
 
+const apiBase = "http://127.0.0.1:8000/";
+
 function Predict() {
   const [uploadedPreview, setUploadedPreview] = useState(null);
   const [sampleIndex, setSampleIndex] = useState(null);
@@ -8,6 +10,49 @@ function Predict() {
   const [prediction, setPrediction] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
+
+  function convertToBase64(fileOrBlob) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+      reader.readAsDataURL(fileOrBlob);
+    });
+  }
+
+  async function runModel() {
+    let image = null;
+    if (uploadedFile) {
+      image = await convertToBase64(uploadedFile);
+    } else if (sampleIndex !== null) {
+      const src = samples[sampleIndex];
+      const res = await fetch(src);
+      const blob = await res.blob();
+      image = await convertToBase64(blob);
+    }
+    if (!image) {
+      alert("Please upload or select an image");
+      return;
+    }
+
+    try {
+      const response = await fetch(apiBase + "predict/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          image: image,
+        }),
+      });
+      const data = await response.json();
+
+      console.log(data);
+    } catch (err) {
+      console.log("error");
+    }
+  }
+
   function handleImage(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -16,11 +61,6 @@ function Predict() {
     setSampleIndex(null); // remove highlight from samples
     setPrediction(null);
     setShowDetails(false);
-  }
-
-  async function runModel() {
-    setPrediction({ label: "Dog", confidence: 92.4 });
-    setShowDetails(true);
   }
 
   const samples = [
