@@ -50,6 +50,10 @@ function Home(props) {
           title="Project Code"
           des="Checkout the code for unsupervised model"
           image_dest="/code.png"
+          onClick={() => {
+            window.location.href =
+              "https://github.com/LexanderThakur/Cats_Vs_Dogs/blob/main/Model_NoLabel_73acc.ipynb";
+          }}
         />
       </motion.div>
     </motion.div>
@@ -57,3 +61,4 @@ function Home(props) {
 }
 
 export default Home;
+// checking push

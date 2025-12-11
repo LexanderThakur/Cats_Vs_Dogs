@@ -75,7 +75,7 @@ function Predict(props) {
     "/sample6.jpg",
     "/sample7.jpg",
   ];
-
+  // hello
   return (
     <div className="predict-container">
       {/* HEADER */}
