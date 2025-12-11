@@ -2,7 +2,7 @@ import "./Home.css";
 import Card from "./Card";
 import { motion } from "framer-motion";
 
-function Home() {
+function Home(props) {
   return (
     <motion.div
       className="hero"
@@ -38,11 +38,13 @@ function Home() {
           title="Inference Mode"
           image_dest="https://media.istockphoto.com/id/814423752/photo/eye-of-model-with-colorful-art-make-up-close-up.jpg?s=612x612&w=0&k=20&c=l15OdMWjgCKycMMShP8UK94ELVlEGvt7GmB_esHWPYE="
           des="Try out the model predictions for yourself"
+          onClick={() => props.goTo("inf")}
         />
         <Card
           title="Unsupervised Pipline"
           image_dest="/Unsupervised.png"
           des="Understand this models pipline (SimCLR)"
+          onClick={() => props.goTo("pipeline")}
         />
         <Card
           title="Project Code"

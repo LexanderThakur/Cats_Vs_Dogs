@@ -31,6 +31,7 @@
   border-radius: 28px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   margin-bottom: 40px;
+  max-height: 40%;
 }
 
 .predict-grid {
@@ -177,4 +178,12 @@
 .pipeline {
   color: #555;
   line-height: 1.6;
+}
+
+.title-underline {
+  width: 30%;
+  height: 4px;
+  margin: 12px auto 20px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #0066ff, #00c6ff);
 }

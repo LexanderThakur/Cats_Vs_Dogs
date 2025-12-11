@@ -1,16 +1,16 @@
 import { useState } from "react";
 import "./Predict.css";
-
+import { motion } from "framer-motion";
 const apiBase = "http://127.0.0.1:8000/";
 
-function Predict() {
+function Predict(props) {
   const [uploadedPreview, setUploadedPreview] = useState(null);
   const [sampleIndex, setSampleIndex] = useState(null);
 
   const [prediction, setPrediction] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
-
+  const [loading, setLoad] = useState("Run Model");
   function convertToBase64(fileOrBlob) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -34,6 +34,7 @@ function Predict() {
       alert("Please upload or select an image");
       return;
     }
+    setLoad("Loading...");
 
     try {
       const response = await fetch(apiBase + "predict/", {
@@ -48,6 +49,8 @@ function Predict() {
       const data = await response.json();
 
       console.log(data);
+      setPrediction(data);
+      setLoad("Run Model");
     } catch (err) {
       console.log("error");
     }
@@ -77,15 +80,28 @@ function Predict() {
     <div className="predict-container">
       {/* HEADER */}
       <div className="predict-header">
-        <p className="back">← Back to home</p>
+        <p className="back" onClick={() => props.goTo("home")}>
+          ← Back to home
+        </p>
         <h1 className="title">Inference Mode</h1>
+        <motion.div
+          className="title-underline"
+          initial={{ width: 0 }}
+          animate={{ width: 240 }}
+          transition={{ delay: 0.8, duration: 0.8 }}
+        />
         <p className="subtitle">
           Upload an image or select one of the sample inputs
         </p>
       </div>
 
       {/* MAIN CARD */}
-      <div className="big-card">
+      <motion.div
+        className="big-card"
+        initial={{ opacity: 0, y: 120 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
         <div className="predict-grid">
           {/* LEFT: INPUT */}
           <div className="input-box">
@@ -118,16 +134,18 @@ function Predict() {
                     setSampleIndex(index); // highlight this sample
                     setUploadedPreview(null); // remove upload preview
                     setUploadedFile(null);
+                    setPrediction(null);
                   }}
                 />
               ))}
             </div>
 
             <button className="predict-btn" onClick={runModel}>
-              Run Model
+              {loading}
             </button>
           </div>
 
+          {/* RIGHT: OUTPUT */}
           {/* RIGHT: OUTPUT */}
           <div className="output-box">
             <h2>Model Output</h2>
@@ -138,15 +156,21 @@ function Predict() {
 
             {prediction && (
               <div className="prediction-card">
+                {(uploadedPreview || sampleIndex !== null) && (
+                  <img
+                    src={uploadedPreview || samples[sampleIndex]}
+                    className="output-img"
+                    alt="Selected"
+                  />
+                )}
+
                 <p className="pred-label">{prediction.label}</p>
-                <p className="pred-score">
-                  {prediction.confidence}% confidence
-                </p>
+                <p className="sub-title">(or something ugly)</p>
               </div>
             )}
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* UNDER THE HOOD */}
       {showDetails && (
