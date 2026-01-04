@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "./Predict.css";
 import { motion } from "framer-motion";
-const apiBase = "http://127.0.0.1:8000/";
-
+// const apiBase = "http://127.0.0.1:8000/";
+// const API_URL = import.meta.env.VITE_API_URL;
 function Predict(props) {
   const [uploadedPreview, setUploadedPreview] = useState(null);
   const [sampleIndex, setSampleIndex] = useState(null);
@@ -37,7 +37,7 @@ function Predict(props) {
     setLoad("Loading...");
 
     try {
-      const response = await fetch(apiBase + "predict/", {
+      const response = await fetch("/api/predict/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

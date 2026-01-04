@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  backend:
+    image: cvd-backend
+    container_name: backend
+    ports:
+      - "8000:8000"
+
+  frontend:
+    image: cvd-frontend
+    container_name: frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
