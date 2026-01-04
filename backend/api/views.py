@@ -16,6 +16,10 @@ import torch.nn as nn
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
+@api_view(['GET'])
+def health(request):
+    return Response({"status":"live"})
+
 class SimpleEncoder(nn.Module):
     def __init__(self):
         super().__init__()

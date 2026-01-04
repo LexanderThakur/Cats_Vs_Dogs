@@ -25,7 +25,7 @@ function Pipeline({ goTo }) {
       />
 
       <p className="pipeline-sub">
-        A clean breakdown of how the SimCLR-based Cats vs Dogs model works
+        A clean breakdown of how the SimCLR-based Cats vs Dogs model works.
       </p>
 
       {/* STAGES */}
@@ -49,9 +49,12 @@ function Pipeline({ goTo }) {
           <li>Gaussian Blur</li>
           <li>Horizontal Flip</li>
         </ul>
+
         <p className="note">
           Two differently augmented versions of the same image are created.
         </p>
+
+        <img src="augmentations.png" alt="Augmentations" className="aug-img" />
       </div>
 
       <div className="pipeline-stage">
@@ -60,6 +63,7 @@ function Pipeline({ goTo }) {
           A custom CNN extracts features. The output is a{" "}
           <b>256-dimensional representation</b>.
         </p>
+        {/* <img src="encoder.png" alt="" className="enc-img" /> */}
       </div>
 
       <div className="pipeline-stage">
@@ -68,15 +72,18 @@ function Pipeline({ goTo }) {
           The 256-dim feature goes through two linear layers to produce a
           <b>128-dim projection</b> used for contrastive learning.
         </p>
+        <p>Example of an MLP:</p>
+        <img src="mlp.png" alt="" className="aug-img" />
       </div>
 
       <div className="pipeline-stage">
         <h2>5. Contrastive Training (SimCLR)</h2>
         <p>Using NT-Xent loss, the model learns to:</p>
         <ul>
-          <li>Pull together augmented views of the same image</li>
-          <li>Push apart views of different images</li>
+          <li>Pulls together positive pairs together in latent space.</li>
+          <li>Pushes apart negative pairs away.</li>
         </ul>
+        <img src="latent.png" alt="" className="aug-img" />
       </div>
 
       <div className="pipeline-stage">
@@ -88,14 +95,22 @@ function Pipeline({ goTo }) {
             Groups mapped to: <b>Cats vs Dogs</b>
           </li>
         </ul>
+        <p>t-SNE Plot:</p>
+        <img src="tsne.png" alt="" className="aug-img" />
       </div>
 
       <div className="pipeline-stage">
-        <h2>7. Final Prediction</h2>
-        <p>
-          For an uploaded image, features → PCA → KMeans → <b>Cat or Dog</b>.
-        </p>
+        <h2>7. Final Results</h2>
+
+        <p>Below is the Accuracy vs No. of Epochs trained.</p>
+        <img src="acc.png" alt="" className="aug-img" />
       </div>
+      <a href="https://github.com/LexanderThakur/Cats_Vs_Dogs">GITHUB REPO</a>
+      <br />
+      <br />
+      <a href="https://github.com/LexanderThakur/Cats_Vs_Dogs/blob/main/Cats_vs_Dogs_pdf.pdf">
+        Research Paper for the project.
+      </a>
     </motion.div>
   );
 }

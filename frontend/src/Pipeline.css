@@ -44,7 +44,18 @@
   box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.05);
   text-align: left;
 }
-
+.aug-img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+.enc-img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
 .pipeline-stage h2 {
   margin-bottom: 12px;
   font-size: 1.4rem;
