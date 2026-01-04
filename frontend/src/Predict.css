@@ -187,3 +187,64 @@
   border-radius: 10px;
   background: linear-gradient(90deg, #0066ff, #00c6ff);
 }
+.backend-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f6f6f6;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 18px;
+  font-size: 0.9rem;
+}
+
+.backend-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.backend-text {
+  color: #444;
+}
+
+.backend-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.backend-actions button {
+  background: transparent;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.backend-actions button:hover {
+  background: #eaeaea;
+}
+
+/* status dots */
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.dot.live {
+  background: #2ecc71;
+}
+
+.dot.down {
+  background: #f39c12;
+}
+
+.dot.checking {
+  background: #3498db;
+}
+
+.dot.unknown {
+  background: #bbb;
+}

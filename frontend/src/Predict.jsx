@@ -3,6 +3,9 @@ import "./Predict.css";
 import { motion } from "framer-motion";
 // const apiBase = "http://127.0.0.1:8000/";
 // const API_URL = import.meta.env.VITE_API_URL;
+const BACKEND_URL = "https://cvd-backend-yu0j.onrender.com";
+const API_URL = import.meta.env.VITE_API_URL;
+
 function Predict(props) {
   const [uploadedPreview, setUploadedPreview] = useState(null);
   const [sampleIndex, setSampleIndex] = useState(null);
@@ -11,6 +14,27 @@ function Predict(props) {
   const [showDetails, setShowDetails] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [loading, setLoad] = useState("Run Model");
+  const [backendStatus, setBackendStatus] = useState("unknown");
+
+  async function checkBackend() {
+    setBackendStatus("checking");
+    try {
+      const res = await fetch(`${BACKEND_URL}/health`);
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      if (data.status === "live") {
+        setBackendStatus("live");
+      } else {
+        setBackendStatus("error");
+      }
+    } catch {
+      setBackendStatus("down");
+    }
+  }
+  function openBackend() {
+    window.open(`${BACKEND_URL}/health`, "_blank");
+  }
+
   function convertToBase64(fileOrBlob) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -37,7 +61,7 @@ function Predict(props) {
     setLoad("Loading...");
 
     try {
-      const response = await fetch("/api/predict/", {
+      const response = await fetch(`${API_URL}/predict/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -138,6 +162,23 @@ function Predict(props) {
                   }}
                 />
               ))}
+            </div>
+            <br />
+            <div className="backend-strip">
+              <div className="backend-left">
+                <span className={`dot ${backendStatus}`} />
+                <span className="backend-text">
+                  {backendStatus === "live" && "Backend online"}
+                  {backendStatus === "down" && "Backend sleeping"}
+                  {backendStatus === "checking" && "Checking backend..."}
+                  {backendStatus === "unknown" && "Backend status unknown"}
+                </span>
+              </div>
+
+              <div className="backend-actions">
+                <button onClick={checkBackend}>Wake</button>
+                <button onClick={openBackend}>Open Manually</button>
+              </div>
             </div>
 
             <button className="predict-btn" onClick={runModel}>
