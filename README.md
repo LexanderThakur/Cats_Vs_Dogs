@@ -1,5 +1,7 @@
 # 🐱🐶 Unsupervised Cats vs Dogs Classification using SimCLR
 
+Checkout this project at: [Cats vs Dogs](https://example.com)
+
 This project implements **SimCLR-based contrastive learning** to separate cat and dog images **without using any labels**.  
 A custom CNN encoder is trained entirely through augmentations and the NT-Xent loss, and the resulting embeddings are clustered using PCA + K-Means.
 
