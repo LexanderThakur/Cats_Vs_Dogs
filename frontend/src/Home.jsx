@@ -52,7 +52,7 @@ function Home(props) {
           image_dest="/code.png"
           onClick={() => {
             window.location.href =
-              "https://github.com/LexanderThakur/Cats_Vs_Dogs_C";
+              "https://github.com/LexanderThakur/Cats_Vs_Dogs";
           }}
         />
       </motion.div>
